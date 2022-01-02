@@ -1,5 +1,7 @@
 import React ,{useState}from 'react'
-import firebase from "firebase"
+import * as firebase from "firebase"
+import 'firebase/firestore';
+
 
 import {StyleSheet, View, Text , TextInput,TouchableOpacity } from 'react-native'
 
@@ -11,7 +13,14 @@ const Register = () => {
 const onRegister = () =>{
 firebase.auth().createUserWithEmailAndPassword(email, password)
 .then((result)=>{
+    firebase.firestore().collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .set({
+        userName,
+        email      
+    })
     console.log(result)
+ 
 })
 .catch((error)=>{
     console.log(error)

@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react"
+import React,{useState,useEffect,createContext} from "react"
 
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -6,6 +6,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LandingScreen from "./Components/Auth/LandingScreen";
 import Register from "./Components/Auth/Register.js"
 import Login from "./Components/Auth/Login.js"
+import MainScreen from "./Components/MainScreen.js"
+import { UserContext } from "./UserContext";
+
 
 
 import * as firebase from "firebase"
@@ -29,12 +32,14 @@ const Stack = createStackNavigator();
 
 const App = () => {
 
+
 const [loaded,setLoaded] = useState(false)
 const [loggedIn,setLoggedIn] = useState(false)
   
 
 useEffect(() => {
  firebase.auth().onAuthStateChanged((user)=>{
+
 if(!user){
 setLoggedIn(false)
 setLoaded(true)
@@ -69,9 +74,7 @@ if(!loggedIn){
 }
  else{
    return(
-     <View>
-       <Text>Logged in</Text>
-     </View>
+       <MainScreen/>
    )
  }
 };
