@@ -27,6 +27,7 @@ const ProfileMain = ({ navigation }) => {
         .then((snapshot) => {
           let allPosts = snapshot.docs.map((doc) => {
             const data = doc.data();
+
             const id = doc.id;
             return { id, ...data };
           });

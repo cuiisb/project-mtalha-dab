@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 const Profile = () => {
     return (
             <Stack.Navigator >
-                <Stack.Screen name='Profile'  component={ProfileMain}/>
+                <Stack.Screen name='My Profile'  component={ProfileMain}/>
                 <Stack.Screen name="Detail" component={PostDetail}/>
             </Stack.Navigator>
         

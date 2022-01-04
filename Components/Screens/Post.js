@@ -1,8 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import { StyleSheet, Text,TextInput, View,TouchableOpacity,Image, Alert } from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
 import * as firebase from "firebase"
 import 'firebase/firestore';
+import UserContext from "../../UserContext.js";
+
 
 const Post = ({navigation}) => {
 
@@ -10,6 +12,7 @@ const Post = ({navigation}) => {
     const [image , setImage] = useState(null)
 
 const [date,setDate] = useState(new Date())
+const { currentUser } = useContext(UserContext);
 
 const addPost = async () =>{
 try{
@@ -55,6 +58,7 @@ setCaption(null)
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+       
        <TouchableOpacity onPress={pickImage} >
            <Text>Pick an image from camera roll </Text>
        </TouchableOpacity>

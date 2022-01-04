@@ -43,7 +43,7 @@ const MainScreen = () => {
         <Tab.Navigator>
           <Tab.Screen name="Home" component={Home} />
           <Tab.Screen name="Create Post" component={Post} />
-          <Tab.Screen name="ProfileHandle" component={Profile} options={{headerShown: false}} />
+          <Tab.Screen name="Profile" component={Profile} options={{headerShown: false}} />
 
         </Tab.Navigator>
       </NavigationContainer>
