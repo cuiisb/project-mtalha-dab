@@ -28,10 +28,10 @@ console.log("Logged Out");
         animated={true}
         backgroundColor="#dedede"        
         hidden={false} />
-        <View style={{ flexDirection:"row", alignItems:"center", marginTop:10}}>
+        <View style={{ flexDirection:"row", alignItems:"center", justifyContent:"space-between", marginTop:10}}>
            <Image source={LogoWhite} style={styles.logoWhite}/>
-            <View style={{flex:1, flexDirection:"row", marginLeft:100,alignItems:"center"}}>
-            <Text style={{color:"#dedede" ,fontSize:17, marginRight:15, alignItems:"center"}}>Hi <Text > {currentUser.userName}</Text></Text>
+            <View style={{flex:1, flexDirection:"row", marginLeft:70,alignItems:"center"}}>
+            <Text style={{color:"#dedede" ,fontSize:16, marginRight:5, alignItems:"center"}}>Hi <Text > {currentUser.userName}</Text></Text>
             <TouchableOpacity style={styles.btnMain} onPress={logout}>
                 <Text>Logout</Text>
             </TouchableOpacity>

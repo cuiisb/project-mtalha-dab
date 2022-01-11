@@ -79,20 +79,22 @@ const pickImage = async () => {
   return (
     <ImageBackground source={backHome} resizeMode="cover" style={styles.imageBg}>
 
-    <View>
-    <Text>My Posts</Text>
+    <View style={{marginTop: 20, marginHorizontal:10}}>
+        
+    <Text style={{fontSize:25, color:"white", }}>My Profile</Text>
+      <View style={{flexDirection:"row", alignItems:"center"}}>
       {typeof picture === "boolean"?
-        <Ionicons name="person-circle-outline" size={150} color="green" />
-      :<Image style={{ width: 150, height: 150,borderRadius: 75}} source={{uri: picture}}/>
+        <Ionicons style={{marginTop:20}} name="person-circle-outline" size={130} color="#d9d9d9" />
+      :<Image style={{marginTop:20, width: 130, height: 130,borderRadius: 75}} source={{uri: picture}}/>
 }
 
-<TouchableOpacity onPress={pickImage}>
-<Ionicons name="create-outline" size={30} color="green"  />
+<TouchableOpacity style={{marginLeft:20}} onPress={pickImage}>
+<Ionicons name="create-outline" size={30} color="#00d3d5"  />
 
 </TouchableOpacity>
-<Text>{currentUser.userName}</Text>
-
-      <View>
+      </View>
+<Text style={{color:"white", fontSize:18, marginTop:25}}>Posts</Text>
+      <View style={{marginTop:10}}>
         <FlatList
           numColumns={3}
           horizontal={false}

@@ -53,7 +53,6 @@ const Post = ({ navigation }) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
       quality: 1,
     });
 
@@ -64,30 +63,33 @@ const Post = ({ navigation }) => {
 
   return (
     <ImageBackground source={backHome} resizeMode="cover" style={styles.image}>
+        <Text style={{ fontSize:25,marginTop:20,marginLeft:20, color:"white", }}>Create Post</Text>
+
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View style={{backgroundColor: 'rgba(255, 255, 255,0.05)', width:350, alignItems:"center",paddingVertical:20}}>
       <TextInput
-        multiline
-        numberOfLines={4}
-          editable
+        multiline={true}
           style={styles.input}
-          maxLength={40}
           placeholder="Enter Caption"
           value={caption}
+          placeholderTextColor={"#adadad"}
           onChangeText={(caption) => setCaption(caption)}
         />
-        <TouchableOpacity onPress={pickImage}>
-        <Image source={camera} style={{marginBottom:100}}/>
+        <TouchableOpacity style={{marginBottom:10}} onPress={pickImage}>
 
+<Text style={{fontSize:15, color:"white",textDecorationLine: 'underline'}}>Choose Image</Text>
         </TouchableOpacity>
         {image && (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+          <Image source={{ uri: image }} style={{ width: 300, height: 200 }} />
         )}
 
         
+        </View>
         <TouchableOpacity style={styles.btnMain} onPress={addPost}>
           <Text>Create Post </Text>
         </TouchableOpacity>
       </View>
+     
     </ImageBackground>
   );
 };
@@ -101,14 +103,20 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 80,
     borderRadius: 30,
+    
   },
   image: {
     flex: 1,
     justifyContent: "center",
   },
   input:{
-height:100,
-margin:20,
-padding:20,
-backgroundColor: "white"  }
+    width:300,
+    height:100,
+    borderColor: "#00797a",
+  borderWidth:1,
+  borderRadius:5,
+color:"white",
+marginBottom:20,
+padding:5
+}
 });

@@ -12,7 +12,7 @@ const Profile = () => {
     return (
             <Stack.Navigator >
                 <Stack.Screen name='My Profile'  component={ProfileMain} options={{headerShown:false}}/>
-                <Stack.Screen name="Detail" component={PostDetail}/>
+                <Stack.Screen name="Detail" component={PostDetail} options={{headerShown:false}}/>
             </Stack.Navigator>
         
     )

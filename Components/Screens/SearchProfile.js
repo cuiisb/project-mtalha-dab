@@ -11,12 +11,17 @@ import {
 import backHome from "../../Design/backgroundHome.png";
 import * as firebase from "firebase";
 import "firebase/firestore";
+import { Ionicons } from '@expo/vector-icons';
+
 
 const SearchProfile = ({ navigation, route }) => {
+  const { searchData } = route.params;
+
+
   const [searchUser, setSearchUser] = useState({});
   const [posts, setPosts] = useState([]);
+  const [picture,setPicture] = useState(searchData.item.picture)
 
-  const { searchData } = route.params;
 
   const getPosts = () => {
     try {
@@ -50,18 +55,25 @@ const SearchProfile = ({ navigation, route }) => {
       resizeMode="cover"
       style={styles.imageBg}
     >
-      {console.log(searchData.item.picture)}
+<Ionicons name="arrow-back-outline" size={40} 
+    color={"#00d3d5"} style={{marginTop:10,marginLeft:10}}
+    onPress={() => navigation.goBack()} />
+    <View style={{marginTop: 20, marginHorizontal:10}}>
+
+    <Text style={{fontSize:25,marginTop:-10,marginBottom:20, color:"white", }}>{searchData.item.userName}'s Profile</Text>
+
       <View>
-      {typeof searchData.item.picture != false ? (
+      {typeof searchData.item.picture  === "boolean" ? (
+        <Ionicons name="person-circle-outline" size={130} color="#d9d9d9" />
+          
+        ) : (
           <Image
             style={{ width: 150, height: 150, borderRadius: 75 }}
             source={{ uri: searchData.item.picture }}
-          />
-        ) : (
-          <Ionicons name="person-circle-outline" size={32} color="green" />
+          />   
         )}
-        <Text>{searchData.item.userName}'s Posts</Text>
-        <View>
+        <Text style={{color:"white", fontSize:18, marginTop:25}}>Posts</Text>
+        <View style={{marginTop:10}}>
           <FlatList
             numColumns={3}
             horizontal={false}
@@ -71,7 +83,7 @@ const SearchProfile = ({ navigation, route }) => {
                 <View style={styles.containerImage}>
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate("Detail", { itemData: item })
+                      navigation.navigate("PostDetail", { itemData: item })
                     }
                   >
                     <Image source={{ uri: item.image }} style={styles.image} />
@@ -81,6 +93,7 @@ const SearchProfile = ({ navigation, route }) => {
             }}
           />
         </View>
+      </View>
       </View>
     </ImageBackground>
   );
