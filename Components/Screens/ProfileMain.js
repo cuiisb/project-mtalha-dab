@@ -6,14 +6,49 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  ImageBackground
 } from "react-native";
 import * as firebase from "firebase";
 import "firebase/firestore";
 import UserContext from "../../UserContext.js";
+import backHome from "../../Design/backgroundHome.png";
+import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from "expo-image-picker";
+
 
 const ProfileMain = ({ navigation }) => {
   const { currentUser } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
+const [picture,setPicture] = useState(currentUser.picture)
+
+const changePic=()=>{
+
+  firebase
+  .firestore()
+  .collection("users")
+ .doc(firebase.auth().currentUser.uid)
+  .update({
+    picture: picture
+  })
+  .then(() => {
+    console.log("Added");
+  });
+
+}
+const pickImage = async () => {
+  // No permissions request is necessary for launching the image library
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1,
+  });
+
+  if (!result.cancelled) {
+    setPicture(result.uri);
+    changePic()
+  }
+};
 
   const getPosts = async () => {
     try {
@@ -42,9 +77,21 @@ const ProfileMain = ({ navigation }) => {
   }, []);
 
   return (
+    <ImageBackground source={backHome} resizeMode="cover" style={styles.imageBg}>
+
     <View>
-      <Text>{currentUser.userName}</Text>
-      <Text>My Posts</Text>
+    <Text>My Posts</Text>
+      {typeof picture === "boolean"?
+        <Ionicons name="person-circle-outline" size={150} color="green" />
+      :<Image style={{ width: 150, height: 150,borderRadius: 75}} source={{uri: picture}}/>
+}
+
+<TouchableOpacity onPress={pickImage}>
+<Ionicons name="create-outline" size={30} color="green"  />
+
+</TouchableOpacity>
+<Text>{currentUser.userName}</Text>
+
       <View>
         <FlatList
           numColumns={3}
@@ -62,6 +109,8 @@ const ProfileMain = ({ navigation }) => {
         />
       </View>
     </View>
+    </ImageBackground>
+
   );
 };
 
@@ -80,5 +129,9 @@ const styles = StyleSheet.create({
     aspectRatio: 1 / 1,
     marginHorizontal: 1,
     marginVertical: 1,
+  },
+
+  imageBg: {
+    flex:1
   },
 });

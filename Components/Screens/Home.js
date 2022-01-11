@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View ,Image, StatusBar, ImageBackground} from 'react-native'
 import UserContext from "../../UserContext.js";
 import * as firebase from "firebase"
-import { getAuth, signOut } from "firebase/auth";
+import LogoWhite from "../../Design/LogoWhite.png";
+import backHome from "../../Design/backgroundHome.png";
 
 
 const Home = () => {
@@ -20,12 +21,25 @@ console.log("Logged Out");
     }
 
     return (
-        <View style={{flex:1, flexDirection:"row", justifyContent:"flex-end"}}>
-            <Text style={{fontSize:18, marginRight:15,marginTop:12, alignItems:"center"}}>Hi <Text style={{fontWeight:"bold"}}> {currentUser.userName}</Text></Text>
+        <ImageBackground source={backHome} resizeMode="cover" style={styles.image}>
+
+<View style={{flex:1}}>
+<StatusBar
+        animated={true}
+        backgroundColor="#dedede"        
+        hidden={false} />
+        <View style={{ flexDirection:"row", alignItems:"center", marginTop:10}}>
+           <Image source={LogoWhite} style={styles.logoWhite}/>
+            <View style={{flex:1, flexDirection:"row", marginLeft:100,alignItems:"center"}}>
+            <Text style={{color:"#dedede" ,fontSize:17, marginRight:15, alignItems:"center"}}>Hi <Text > {currentUser.userName}</Text></Text>
             <TouchableOpacity style={styles.btnMain} onPress={logout}>
                 <Text>Logout</Text>
             </TouchableOpacity>
+            </View>
         </View>
+        </View>
+        </ImageBackground>
+
     )
 }
 
@@ -35,12 +49,20 @@ const styles = StyleSheet.create({
 
     btnMain: {
         width: 87,
-        height:50,
+        height:43,
         backgroundColor: "#00d3d5",
-        paddingVertical: 15,
+        paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 30,
         marginRight:10        
       },
-
+logoWhite:{
+    width: 100,
+    height: 19,
+    marginLeft:15
+},
+image: {
+    flex: 1,
+    justifyContent: "center",
+  },
 })

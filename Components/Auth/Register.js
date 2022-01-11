@@ -18,7 +18,8 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
     .doc(firebase.auth().currentUser.uid)
     .set({
         userName,
-        email      
+        email,
+        picture:false      
     })
     console.log(result)
  

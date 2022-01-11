@@ -9,6 +9,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./Screens/Home.js";
 import Post from "./Screens/Post.js";
 import Profile from "./Screens/Profile.js";
+import Search from "./Screens/Search.js"
+import SearchProfile from "./Screens/SearchProfile.js";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
@@ -41,8 +43,9 @@ const MainScreen = () => {
     <UserContext.Provider value={{currentUser}}>
       <NavigationContainer>
         <Tab.Navigator>
-          <Tab.Screen name="Home" component={Home} />
-          <Tab.Screen name="Create Post" component={Post} />
+          <Tab.Screen name="Home" component={Home} options={{headerShown:false}} />
+          <Tab.Screen name="Create Post" component={Post} options={{headerShown:false}} />
+          <Tab.Screen name="SearchNav" component={SearchNav} options={{headerShown: false, title:"Search"}} />
           <Tab.Screen name="Profile" component={Profile} options={{headerShown: false}} />
 
         </Tab.Navigator>
@@ -50,6 +53,18 @@ const MainScreen = () => {
     </UserContext.Provider>
   );
 };
+
+const SearchNav = ()=>{
+
+  return(
+    <Stack.Navigator initialRouteName="Search">
+                <Stack.Screen name='Search'  component={Search} options={{headerShown:false}}/>
+                <Stack.Screen name='SearchProfile'  component={SearchProfile} options={{headerShown:false}}/>
+
+            </Stack.Navigator>
+  )
+}
+
 
 export default MainScreen;
 

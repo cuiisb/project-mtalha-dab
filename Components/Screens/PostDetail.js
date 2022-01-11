@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View ,Image} from 'react-native'
+import { StyleSheet, Text, View ,Image,ImageBackground} from 'react-native'
 
+import backHome from "../../Design/backgroundHome.png";
 
 
 
@@ -41,11 +42,15 @@ calculateYear()
 },[])
 
     return (
+        <ImageBackground source={backHome} resizeMode="cover" style={styles.imageBg}>
+
         <View style={styles.containerImage} >
 <Text>{itemData.caption}</Text>
         <Image source={{ uri: itemData.image }} style={styles.image} />
         <Text>{date}{" - "}{month}{" - "}{year} </Text>
         </View>
+        </ImageBackground>
+
     )
 }
 
@@ -60,5 +65,8 @@ const styles = StyleSheet.create({
         aspectRatio: 1 / 1,
         marginHorizontal: 1,
         marginVertical: 1,
-    }
+    },
+    imageBg: {
+        flex: 1,
+      },
 })
