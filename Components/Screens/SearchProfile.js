@@ -20,7 +20,65 @@ const SearchProfile = ({ navigation, route }) => {
 
   const [searchUser, setSearchUser] = useState({});
   const [posts, setPosts] = useState([]);
-  const [picture,setPicture] = useState(searchData.item.picture)
+  const [following,setFollowing] = useState(false)
+
+
+const checkFollow=()=>{
+
+  firebase
+      .firestore()
+      .collection("following")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("userFollowing")
+      .doc(searchData.item.id).
+      then((snapshot)=>{
+        console.log(snapshot);
+setFollowing(true)
+      })
+}
+
+
+const follow =async()=>{
+  setFollowing(!following)
+
+  try {
+    await firebase
+      .firestore()
+      .collection("following")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("userFollowing")
+      .doc(searchData.item.id)
+      .set({})
+     
+      .then(() => {
+        console.log("Followed");
+        
+      });
+  } catch (err) {
+    console.log(err);
+  }  
+}
+
+const unfollow =async()=>{
+  setFollowing(!following)
+
+  try {
+    await firebase
+      .firestore()
+      .collection("following")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("userFollowing")
+      .doc(searchData.item.id)
+      .delete()
+     
+      .then(() => {
+        console.log("unfollowed");
+        
+      });
+  } catch (err) {
+    console.log(err);
+  }  
+}
 
 
   const getPosts = () => {
@@ -47,6 +105,8 @@ const SearchProfile = ({ navigation, route }) => {
   };
   useEffect(async () => {
     getPosts();
+    checkFollow()
+
   }, []);
 
   return (
@@ -63,6 +123,7 @@ const SearchProfile = ({ navigation, route }) => {
     <Text style={{fontSize:25,marginTop:-10,marginBottom:20, color:"white", }}>{searchData.item.userName}'s Profile</Text>
 
       <View>
+      <View style={{flexDirection:"row", alignItems:"center"}}>
       {typeof searchData.item.picture  === "boolean" ? (
         <Ionicons name="person-circle-outline" size={130} color="#d9d9d9" />
           
@@ -72,6 +133,20 @@ const SearchProfile = ({ navigation, route }) => {
             source={{ uri: searchData.item.picture }}
           />   
         )}
+
+{following?
+  <TouchableOpacity onPress={()=>unfollow()}>
+<Text style={{color:"#00d3d5", fontSize:17, marginLeft:20}}>Unfollow</Text>
+
+</TouchableOpacity>
+:
+<TouchableOpacity onPress={()=>follow()}>
+<Text style={{color:"#00d3d5", fontSize:17, marginLeft:20}}>Follow</Text>
+
+</TouchableOpacity>}
+
+
+      </View>
         <Text style={{color:"white", fontSize:18, marginTop:25}}>Posts</Text>
         <View style={{marginTop:10}}>
           <FlatList

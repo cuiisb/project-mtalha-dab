@@ -20,10 +20,9 @@ const ProfileMain = ({ navigation }) => {
   const { currentUser } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
 const [picture,setPicture] = useState(currentUser.picture)
+const changePic=async()=>{
 
-const changePic=()=>{
-
-  firebase
+ await firebase
   .firestore()
   .collection("users")
  .doc(firebase.auth().currentUser.uid)
